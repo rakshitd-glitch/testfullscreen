@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <!-- Construct 2 style viewport - minimal-ui hides browser chrome on scroll -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, minimal-ui" />
+  
+  <!-- Hide browser UI on iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  <!-- Android browser theming -->
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#000000" />
+  
+  <title>Endless Runner</title>
+  <meta name="description" content="An endless runner game where you can run as fast as you can." />
+  <meta name="keywords" content="endless runner, game, run, fast" />
+  <meta name="author" content="Ravi Kapuriya" />
+  <style>
+    /* Construct 2 style fullscreen - uses viewport units */
+    html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      position: fixed;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #0e0f17;
+      overflow: hidden;
+      position: fixed;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+      overscroll-behavior: none;
+    }
+
+    #game-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    canvas {
+      outline: none;
+      touch-action: none;
+      -ms-touch-action: none;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    @font-face {
+      font-family: "PoppinsRegular";
+      font-weight: normal;
+      font-style: normal;
+      src: url("assets/fonts/Poppins-Regular.ttf");
+    }
+
+    #game-over-container {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: rgba(0, 0, 0, 0.5);
+      gap: 20px;
+    }
+
+    #landingPage {
+      background-image: url("/assets/landingBg.png");
+      width: 100vw;
+      height: 100dvh;
+      background-size: cover;
+      background-position: center;
+      z-index: 50000;
+      position: absolute;
+      display: none;
+    }
+
+    #landingPageButton {
+      position: absolute;
+      background: transparent;
+      border: none;
+      bottom: 10vh;
+      right: 50%;
+      transform: translate(50%, 50%);
+    }
+
+    #landingPageButton img {
+      width: 100px;
+    }
+
+    #landingPage .landingPageText {
+      height: auto;
+      position: absolute;
+      top: 35vh;
+      width: 250px;
+      transform: translate(50%, 50%);
+      right: 50%;
+    }
+
+    #landingPage .landingPagePlayers {
+      width: 200px;
+      height: auto;
+      position: absolute;
+      bottom: 25vh;
+      transform: translate(50%, 50%);
+      right: 50%;
+    }
+
+    @media only screen and (max-width: 768px) {
+      #landingPage {
+        background-image: url("/assets/portraitLandingBg.png");
+        background-position: bottom;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+  <div id="landingPage">
+    <div id="landingPage-content">
+      <img src="/assets/tagLine.png" alt="Catch me if you can" class="landingPageText" />
+
+      <img src="/assets/landingPagePlayers.png" alt="Srikant and Rukma" class="landingPagePlayers" />
+      <button id="landingPageButton">
+        <img src="/assets/startButton.png" alt="Start" />
+      </button>
+    </div>
+  </div>
+  <div id="game-container">
+    <div id="game-over-container" style="display: none">
+      <div id="game-over-score" style="font-size: 48px; color: #ffffff">
+        Score: 0
+      </div>
+      <div id="game-over-selected-character" style="font-size: 48px; color: #ffffff">
+        Selected Character: 1
+      </div>
+    </div>
+  </div>
+  <div style="
+        font-family: PoppinsRegular;
+        position: absolute;
+        left: -1000px;
+        visibility: hidden;
+      ">
+    .
+  </div>
+  <script type="module" src="/src/main.ts"></script>
+
+  <script>
+    document.addEventListener("game-load-complete", (event) => {
+      const landingPage = document.getElementById("landingPage");
+      const gameContainer = document.getElementById("game-container");
+      landingPage.style.display = "block";
+    });
+
+    const gameContainer = document.querySelector("#game-container");
+    const landingPageButton = document.querySelector("#landingPageButton");
+    
+    // Prevent default touch behavior to avoid double-triggering
+    landingPageButton.addEventListener("click", startBtnClick);
+    landingPageButton.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      startBtnClick(e);
+    });
+
+    function startBtnClick(e) {
+      document.getElementById("landingPage").style.display = "none";
+      document.getElementById("game-container").style.display = "block";
+
+      const gameStartEvent = new Event("game-start");
+      document.dispatchEvent(gameStartEvent);
+      
+      // Construct 2 style fullscreen - simple and effective
+      hideAddressBar();
+    }
+
+    /**
+     * Construct 2 approach: Hide address bar with scroll trick
+     * This works on both iOS and Android without Fullscreen API
+     */
+    function hideAddressBar() {
+      // Scroll down 1px to hide address bar on mobile
+      setTimeout(() => {
+        window.scrollTo(0, 1);
+      }, 100);
+
+      // Keep hiding address bar on any scroll
+      window.addEventListener('scroll', () => {
+        if (window.pageYOffset === 0) {
+          window.scrollTo(0, 1);
+        }
+      }, { passive: true });
+
+      // Prevent elastic scrolling on iOS
+      document.body.addEventListener('touchmove', (e) => {
+        if (e.target === document.body || e.target === gameContainer) {
+          e.preventDefault();
+        }
+      }, { passive: false });
+
+      // Hide address bar on orientation change (rotation)
+      window.addEventListener('orientationchange', () => {
+        setTimeout(() => {
+          window.scrollTo(0, 1);
+        }, 100);
+      });
+
+      // Also listen for resize events (covers more cases)
+      window.addEventListener('resize', () => {
+        setTimeout(() => {
+          window.scrollTo(0, 1);
+        }, 100);
+      });
+    }
+
+    // BONUS: Hide address bar on device rotation even before game starts
+    window.addEventListener('orientationchange', () => {
+      setTimeout(() => {
+        window.scrollTo(0, 1);
+      }, 100);
+    });
+
+    window.addEventListener('resize', () => {
+      // Only trigger if it's likely a rotation (significant size change)
+      setTimeout(() => {
+        window.scrollTo(0, 1);
+      }, 100);
+    });
+
+
+    document.addEventListener("game-over", (event) => {
+      const { score, selectedCharacter } = event.detail;
+      document.getElementById(
+        "game-over-score"
+      ).innerText = `Score: ${score}`;
+      document.getElementById(
+        "game-over-selected-character"
+      ).innerText = `Selected Character: ${selectedCharacter}`;
+      document.getElementById("game-over-container").style.display = "block";
+    });
+  </script>
+</body>
+
+</html>

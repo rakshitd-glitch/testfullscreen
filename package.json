@@ -1,0 +1,20 @@
+{
+  "name": "endless-runner-phaser-starter",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build --mode production",
+    "preview": "vite preview",
+    "serve": "vite preview --port 4173 --host"
+  },
+  "dependencies": {
+    "phaser": "^3.90.0",
+    "terser": "^5.44.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "vite": "^7.1.12"
+  }
+}

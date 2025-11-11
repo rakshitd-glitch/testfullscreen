@@ -1,0 +1,88 @@
+╔══════════════════════════════════════════════════════════════╗
+║       📤 GITHUB UPLOAD CHECKLIST (Drag & Drop)               ║
+╚══════════════════════════════════════════════════════════════╝
+
+✅ FILES TO UPLOAD (Select these):
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📁 FOLDERS:
+   [ ] src/                    (Your game code)
+   [ ] assets/                 (Images, fonts, sprites)
+   [ ] types/                  (TypeScript types)
+
+📄 ROOT FILES:
+   [ ] index.html
+   [ ] package.json           ⭐ IMPORTANT
+   [ ] package-lock.json      ⭐ IMPORTANT
+   [ ] tsconfig.json
+   [ ] vite.config.ts
+   [ ] render.yaml            ⭐ IMPORTANT FOR RENDER
+   [ ] .gitignore
+   [ ] .renderignore
+
+📄 OPTIONAL DOCS:
+   [ ] DEPLOYMENT.md
+   [ ] RENDER_QUICK_START.md
+   [ ] GIT_DEPLOYMENT_STEPS.md
+   [ ] UPLOAD_TO_GITHUB_GUIDE.md
+   [ ] UPLOAD_CHECKLIST.txt
+
+
+❌ DON'T UPLOAD THESE:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+   [X] node_modules/          ← 100+ MB, skip this!
+   [X] dist/                  ← Build output, skip this!
+
+
+📏 SIZE CHECK:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+   ✅ Total upload: ~20 MB (correct)
+   ❌ Total upload: 100+ MB (you included node_modules!)
+
+
+📋 STEPS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. [ ] Create repo on github.com/new
+2. [ ] Select files/folders from checklist above
+3. [ ] Drag & drop to GitHub (Add file → Upload files)
+4. [ ] Commit changes
+5. [ ] Go to render.com
+6. [ ] New + → Static Site
+7. [ ] Connect your GitHub repo
+8. [ ] Create Static Site
+9. [ ] Wait 2-3 minutes
+10. [ ] Game is LIVE! 🎉
+
+
+🔍 VERIFY ON GITHUB:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+After upload, check:
+   [ ] Can see src/ folder
+   [ ] Can see assets/ folder
+   [ ] Can see render.yaml file
+   [ ] Can see package.json file
+   [ ] NO node_modules/ folder visible
+   [ ] NO dist/ folder visible
+
+
+💡 REMEMBER:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+→ Render will run: npm install (creates node_modules/)
+→ Render will run: npm run build (creates dist/)
+→ You don't need to upload these folders!
+
+
+🎮 YOUR GAME WILL BE LIVE AT:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+   https://your-game-name.onrender.com
+
+╔══════════════════════════════════════════════════════════════╗
+║                  ✨ READY TO UPLOAD! ✨                      ║
+╚══════════════════════════════════════════════════════════════╝
+

@@ -1,0 +1,19 @@
+{
+  "name": "Endless Runner - Family Man",
+  "short_name": "Endless Runner",
+  "description": "An endless runner game where you can run as fast as you can",
+  "start_url": "./index.html",
+  "display": "fullscreen",
+  "orientation": "landscape",
+  "background_color": "#0e0f17",
+  "theme_color": "#0e0f17",
+  "icons": [
+    {
+      "src": "/assets/landingPagePlayers.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
+
